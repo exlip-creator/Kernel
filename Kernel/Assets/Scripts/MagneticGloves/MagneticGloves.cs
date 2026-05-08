@@ -1,14 +1,15 @@
 using UnityEngine;
+using StarterAssets;
 
 public class MagneticGloves : MonoBehaviour
 {
     [Header("Links")]
     [SerializeField] private Basics inventory;
-    [SerializeField] private Rigidbody player;
+    [SerializeField] private ThirdPersonController player;
     [SerializeField] private Camera cam;
 
     [Header("Gloves item")]
-    [SerializeField] private int glovesID = 1;
+    [SerializeField] private int glovesID = 0;
     
     [Header("Raycast")]
     [SerializeField] private float maxDistance = 25.0f;
@@ -24,12 +25,18 @@ public class MagneticGloves : MonoBehaviour
     private void Awake()
     {
         if (!cam) cam = Camera.main;
-        if (!player) player = GetComponent<Rigidbody>();
+        if (!player) player = GetComponent<ThirdPersonController>();
     }
 
     private void Update()
     {
         if (!GlovesSelected())
+        {
+            ClearTarget();
+            return;
+        }
+        
+        if (!player)
         {
             ClearTarget();
             return;
@@ -49,8 +56,9 @@ public class MagneticGloves : MonoBehaviour
     private void FixedUpdate()
     {
         if (_target == null || _targetTransform == null) return;
+        if (!player) return;
 
-        Vector3 toTarget = _targetTransform.position - player.position;
+        Vector3 toTarget = _targetTransform.position - player.transform.position;
         float dist = toTarget.magnitude;
 
         if (dist <= _target.stopDistance)
@@ -59,22 +67,16 @@ public class MagneticGloves : MonoBehaviour
             return;
         }
 
-        player.AddForce(toTarget.normalized * pullAcceleration, ForceMode.Acceleration);
-
-        Vector3 vec = player.linearVelocity;
-        Vector3 horizontalSpeed = new Vector3(vec.x, 0, vec.z);
-        if (horizontalSpeed.magnitude > maxPullSpeed)
-        {
-            Vector3 clamped = horizontalSpeed.normalized * maxPullSpeed;
-            player.linearVelocity = new Vector3(clamped.x, vec.y, clamped.z);
-        }
+        float desiredSpeed = Mathf.Min(maxPullSpeed, pullAcceleration * dist * Time.deltaTime);
+        Vector3 pullVelocity = toTarget.normalized * desiredSpeed;
+        player.ExternalLaunch(new Vector3(pullVelocity.x, pullVelocity.y, pullVelocity.z));
     }
 
     private bool GlovesSelected()
     {
         if (!inventory) return false;
 
-        return inventory.selectedItem.id == 1;
+        return inventory.selectedItem != null && inventory.selectedItem.id == glovesID;
     }
 
     private void TryPickTarget()

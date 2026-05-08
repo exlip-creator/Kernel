@@ -2,8 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-[Serializable]
-public class ItemData
+[CreateAssetMenu(menuName = "Inventory/Item", fileName = "NewItem")]
+public class ItemData : ScriptableObject
 {
     public int id;
     public string itemName;
@@ -12,17 +12,39 @@ public class ItemData
 
 public class Basics : MonoBehaviour
 {
-    [Header("Images")]
-    [SerializeField] private Image[] slotImages = new Image[5];
-    [SerializeField] private Color baseColor = new Color(1, 1, 1, 0.15f);
-    [SerializeField] private Color selectedColor = Color.lightSkyBlue;
+    [Serializable]
+    private class SlotUI
+    {
+        public Image background;
+        public Image icon;
+        public Image selectionFrame;
+    }
 
-    private ItemData[] _slots = new ItemData[5];
+    [Header("UI Slots")]
+    [SerializeField] private SlotUI[] uiSlots = new SlotUI[5];
+
+    [Header("Empty Slot Visuals")]
+    [SerializeField] private Sprite emptySlotSprite;
+    [SerializeField] private Color emptySlotColor = Color.white;
+
+    [Header("Selection Visuals")]
+    [SerializeField] private bool hideSelectionFrameWhenNotSelected = true;
+
+    [Header("Strating item")]
+    [SerializeField] private ItemData startingItem;
+
+    private ItemData[] _slots;
     private int _selectedSlotIndex = 0;
-    public ItemData selectedItem => _slots[_selectedSlotIndex];
+    public ItemData selectedItem => (_slots == null || _slots.Length == 0) ? null : _slots[_selectedSlotIndex];
+
+    private void Awake()
+    {
+        _slots = new ItemData[uiSlots.Length];
+    }
 
     private void Start()
     {
+        AddItem(startingItem);
         RefreshUI();
         RefreshSelectUI();
     }
@@ -43,6 +65,7 @@ public class Basics : MonoBehaviour
 
     public void SelectSlot(int index)
     {
+        if (_slots == null) return;
         if (index < 0 || index >= _slots.Length) return;
         _selectedSlotIndex = index;
         RefreshSelectUI();
@@ -50,6 +73,9 @@ public class Basics : MonoBehaviour
 
     public bool AddItem(ItemData item)
     {
+        if (item == null) return false;
+        if (_slots == null) return false;
+
         for (int i = 0; i < _slots.Length; i++)
         {
             if (_slots[i] == null)
@@ -65,32 +91,56 @@ public class Basics : MonoBehaviour
 
     private void RefreshUI()
     {
-        for (int i = 0; i < slotImages.Length; i++)
+        if (_slots == null) return;
+
+        for (int i = 0; i < uiSlots.Length; i++)
         {
-            if (_slots[i] != null)
+            var slot = uiSlots[i];
+            var item = _slots[i];
+
+            if (slot == null) continue;
+
+            if (slot.background != null)
             {
-                slotImages[i].sprite = _slots[i].icon;
-                slotImages[i].color = baseColor; 
+                slot.background.sprite = emptySlotSprite;
+                slot.background.color = emptySlotColor;
             }
-            else
+
+            if (slot.icon != null)
             {
-                slotImages[i].sprite = null;
-                slotImages[i].color = baseColor;
+                if (item != null && item.icon != null)
+                {
+                    slot.icon.enabled = true;
+                    slot.icon.sprite = item.icon;
+                    slot.icon.color = Color.white;
+                }
+                else
+                {
+                    slot.icon.enabled = false;
+                    slot.icon.sprite = null;
+                }
             }
         }
     }
 
     private void RefreshSelectUI()
     {
-        for (int i = 0; i < slotImages.Length; i++)
+        if (_slots == null) return;
+
+        for (int i = 0; i < uiSlots.Length; i++)
         {
-            if (i == _selectedSlotIndex)
+            var slot = uiSlots[i];
+            if (slot == null || slot.selectionFrame == null) continue;
+
+            bool isSelected = i == _selectedSlotIndex;
+            if (hideSelectionFrameWhenNotSelected)
             {
-                slotImages[i].color = selectedColor;
+                slot.selectionFrame.enabled = isSelected;
             }
             else
             {
-                slotImages[i].color = baseColor;
+                slot.selectionFrame.enabled = true;
+                slot.selectionFrame.color = isSelected ? Color.white : new Color(1f, 1f, 1f, 0f);
             }
         }
     }
