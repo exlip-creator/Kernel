@@ -89,6 +89,27 @@ public class Basics : MonoBehaviour
         return false;
     }
 
+    public bool AddItem(ItemData item, int startSlotIndex)
+    {
+        if (item == null) return false;
+        if (_slots == null) return false;
+        if (_slots.Length == 0) return false;
+
+        startSlotIndex = Mathf.Clamp(startSlotIndex, 0, _slots.Length - 1);
+
+        for (int i = startSlotIndex; i < _slots.Length; i++)
+        {
+            if (_slots[i] == null)
+            {
+                _slots[i] = item;
+                RefreshUI();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     private void RefreshUI()
     {
         if (_slots == null) return;
