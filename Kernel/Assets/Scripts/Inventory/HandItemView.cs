@@ -2,7 +2,6 @@ using UnityEngine;
 
 /// <summary>
 /// Показывает modelRoot в руке, когда в инвентаре выбран нужный ItemData.
-/// Поднимает кость руки аддитивным поворотом после анимации (LateUpdate).
 /// </summary>
 public class HandItemView : MonoBehaviour
 {
@@ -13,12 +12,15 @@ public class HandItemView : MonoBehaviour
 
     [Header("Item to show in hands")]
     [SerializeField] private ItemData item;
+    [Tooltip("Если ItemData не совпал ссылкой (редко), можно включить сравнение по id.")]
     [SerializeField] private bool matchByIdFallback = true;
     [SerializeField] private GameObject modelRoot;
 
     [Header("Attach (Robot Kyle: Right_Hand)")]
+    [Tooltip("Перетащи Transform кости правой кисти. Один раз в Awake modelRoot станет её ребёнком.")]
     [SerializeField] private Transform handBone;
     [SerializeField] private bool reparentModelToHandBone = true;
+    [Tooltip("После перепривязки обнулить local pos/rot и scale=1 у modelRoot.")]
     [SerializeField] private bool resetLocalTransformAfterReparent = true;
 
     [Header("Grip (локально у modelRoot)")]
@@ -27,10 +29,9 @@ public class HandItemView : MonoBehaviour
     [SerializeField] private Vector3 localEuler;
     [SerializeField] private Vector3 localScale = Vector3.one;
 
-    [Header("Поднять руку с пистолетом")]
-    [Tooltip("Кость, которую чуть повернуть, когда оружие в руке. Обычно Right_Hand или Right_LowerArm.")]
+    [Header("Поднять руку (кодом)")]
     [SerializeField] private Transform handRaiseBone;
-    [SerializeField] private bool raiseHandWhenEquipped = true;
+    [SerializeField] private bool raiseHandWhenEquipped = false;
     [SerializeField] private Vector3 handRaiseLocalEuler = new Vector3(-35f, 10f, 8f);
 
     [Header("Animator (опционально)")]
