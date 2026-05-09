@@ -559,7 +559,7 @@ MonoBehaviour:
   localScale: {x: 1, y: 1, z: 1}
   handRaiseBone: {fileID: 1952927141}
   raiseHandWhenEquipped: 1
-  handRaiseLocalEuler: {x: 0, y: 67, z: -5}
+  handRaiseLocalEuler: {x: 0, y: 69, z: -10}
   animator: {fileID: 229404917}
   animatorBoolWhenEquipped: 
 --- !u!1001 &140305240
@@ -1294,6 +1294,7 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: e216feabedd3a7848a821f041d224640, type: 2}
   pickupKey: 101
   startSlotIndex: 1
+  maxPickupDistance: 1.4
   inventoryOverride: {fileID: 0}
   promptRoot: {fileID: 0}
   spin: 1
