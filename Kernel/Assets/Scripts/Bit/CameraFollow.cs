@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Bit.Robot
 {
-    /// <summary>
-    /// Third-person orbit camera: mouse look, smooth follow, wall collision pull-in.
-    /// </summary>
     [DefaultExecutionOrder(-150)]
     public class CameraFollow : MonoBehaviour
     {
@@ -12,14 +9,14 @@ namespace Bit.Robot
         [SerializeField] private Transform target;
 
         [Header("Orbit")]
-        [SerializeField] private float cameraDistance = 5f;
-        [SerializeField] private float mouseSensitivity = 2f;
+        [SerializeField] private float cameraDistance = 3f;
+        [SerializeField] private float mouseSensitivity = 4f;
         [SerializeField] private float minPitch = -35f;
         [SerializeField] private float maxPitch = 65f;
 
         [Header("Follow smoothing")]
         [SerializeField] private float followSmoothTime = 0.18f;
-        [SerializeField] private Vector3 targetPivotOffset = new Vector3(0f, 1.6f, 0f);
+        [SerializeField] private Vector3 targetPivotOffset = new Vector3(0f, 1.67f, -0.3f);
 
         [Header("Collision")]
         [SerializeField] private LayerMask obstructionMask = ~0;
