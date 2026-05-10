@@ -713,7 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HandItemView
   inventory: {fileID: 1016176610}
   findInventoryInSceneIfMissing: 1
-  item: {fileID: 11400000, guid: e216feabedd3a7848a821f041d224640, type: 2}
+  item: {fileID: 11400000, guid: 0a7569627774a9341a5fe0f6cd94cec7, type: 2}
   matchByIdFallback: 1
   modelRoot: {fileID: 1276746636}
   handBone: {fileID: 106231688}
@@ -2081,8 +2081,8 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 0a7569627774a9341a5fe0f6cd94cec7, type: 2}
   pickupKey: 101
   startSlotIndex: 1
-  maxPickupDistance: 3
-  inventoryOverride: {fileID: 0}
+  maxPickupDistance: 1.4
+  inventoryOverride: {fileID: 1016176610}
   promptRoot: {fileID: 0}
   spin: 1
   spinDegreesPerSecond: {x: 0, y: 90, z: 0}
@@ -6379,7 +6379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlasterWeapon
   inventory: {fileID: 1016176610}
   findInventoryInSceneIfMissing: 1
-  blasterItem: {fileID: 11400000, guid: e216feabedd3a7848a821f041d224640, type: 2}
+  blasterItem: {fileID: 11400000, guid: 0a7569627774a9341a5fe0f6cd94cec7, type: 2}
   matchByIdFallback: 1
   aimCamera: {fileID: 0}
   muzzle: {fileID: 1242929733}
