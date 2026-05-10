@@ -128,5 +128,6 @@ MonoBehaviour:
   meshRenderer: {fileID: 8284338534189327584}
   activeTexture: {fileID: 2800000, guid: e79220840de3dba438d5eb208fb552e9, type: 3}
   nonActiveTexture: {fileID: 2800000, guid: 4ca3e294d84d41f48b7844c60720c835, type: 3}
-  textureShaderProperty: _MainTex
-  door: {fileID: 0}
+  textureShaderProperty: _BaseMap
+  puzzle: {fileID: 0}
+  isActive: 0

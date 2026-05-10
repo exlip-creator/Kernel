@@ -292,6 +292,60 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32c0a779f4a32a645a1e0732d3eef150, type: 3}
+--- !u!1 &45369920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 45369922}
+  - component: {fileID: 45369921}
+  m_Layer: 0
+  m_Name: ButtonPuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &45369921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45369920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4a8ea410cf5aa41b6e59092f786e10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPuzzle
+  buttons:
+  - {fileID: 1558515447}
+  - {fileID: 1354423879}
+  - {fileID: 1751274524}
+  - {fileID: 1938309303}
+  - {fileID: 1848683194}
+  - {fileID: 1926842151}
+  - {fileID: 1575535400}
+  correctCombination: 01000001000101
+  door: {fileID: 1647557077}
+--- !u!4 &45369922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45369920}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &52221709
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2024,10 +2078,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb40d4717a79f54448792d5f4d19e916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
-  item: {fileID: 11400000, guid: e216feabedd3a7848a821f041d224640, type: 2}
+  item: {fileID: 11400000, guid: 0a7569627774a9341a5fe0f6cd94cec7, type: 2}
   pickupKey: 101
   startSlotIndex: 1
-  maxPickupDistance: 1.4
+  maxPickupDistance: 3
   inventoryOverride: {fileID: 0}
   promptRoot: {fileID: 0}
   spin: 1
@@ -6371,6 +6425,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!1001 &1354423878
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 22.403
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: textureShaderProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101448204509790991, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_Name
+      value: ButtonMaze (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284338534189327584, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d56eb86eba270e4bbb536bb519eb225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+--- !u!114 &1354423879 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 1354423878}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
 --- !u!1001 &1418560487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7404,6 +7542,101 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1558515447 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 3075182150618322228}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
+--- !u!1001 &1575535399
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 16.931
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: textureShaderProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101448204509790991, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_Name
+      value: ButtonMaze (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284338534189327584, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d56eb86eba270e4bbb536bb519eb225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+--- !u!114 &1575535400 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 1575535399}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
 --- !u!1001 &1581923046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7784,7 +8017,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HingeDoor
   hinge: {fileID: 1913208098}
   worldAxis: {x: 0, y: 1, z: 0}
-  angleDegrees: 90
+  angleDegrees: 86
   duration: 0.5
 --- !u!1 &1669279528
 GameObject:
@@ -8184,6 +8417,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+--- !u!1001 &1751274523
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 21.325
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: textureShaderProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101448204509790991, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_Name
+      value: ButtonMaze (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284338534189327584, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d56eb86eba270e4bbb536bb519eb225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+--- !u!114 &1751274524 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 1751274523}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
 --- !u!1 &1761389517
 GameObject:
   m_ObjectHideFlags: 0
@@ -8853,6 +9170,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1848683193
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 19.099
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: textureShaderProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101448204509790991, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_Name
+      value: ButtonMaze (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284338534189327584, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d56eb86eba270e4bbb536bb519eb225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+--- !u!114 &1848683194 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 1848683193}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
 --- !u!1 &1852827757
 GameObject:
   m_ObjectHideFlags: 0
@@ -9305,6 +9706,90 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32c0a779f4a32a645a1e0732d3eef150, type: 3}
+--- !u!1001 &1926842150
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 17.985
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: textureShaderProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101448204509790991, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_Name
+      value: ButtonMaze (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284338534189327584, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d56eb86eba270e4bbb536bb519eb225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+--- !u!114 &1926842151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 1926842150}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
 --- !u!1 &1934080184
 GameObject:
   m_ObjectHideFlags: 0
@@ -9419,6 +9904,90 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1001 &1938309302
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 20.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2934
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703714715175021556, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: textureShaderProperty
+      value: _BaseMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 7101448204509790991, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: m_Name
+      value: ButtonMaze (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284338534189327584, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9d56eb86eba270e4bbb536bb519eb225, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+--- !u!114 &1938309303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+  m_PrefabInstance: {fileID: 1938309302}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c89baa9cd222b44db9290d2c8d05cc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractiveButton
 --- !u!1001 &1945792311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10173,7 +10742,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4958194090769092210, guid: 3cd7e264361a542419010d44eed12528, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10289,6 +10858,10 @@ PrefabInstance:
       propertyPath: door
       value: 
       objectReference: {fileID: 1647557077}
+    - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
+      propertyPath: puzzle
+      value: 
+      objectReference: {fileID: 45369921}
     - target: {fileID: 5874723618094563929, guid: 3fba65d38d9342a46b61b9761664d70f, type: 3}
       propertyPath: textureShaderProperty
       value: _BaseMap
@@ -10735,4 +11308,11 @@ SceneRoots:
   - {fileID: 1445372497}
   - {fileID: 1883612638}
   - {fileID: 3075182150618322228}
+  - {fileID: 1354423878}
+  - {fileID: 1751274523}
+  - {fileID: 1938309302}
+  - {fileID: 1848683193}
+  - {fileID: 1926842150}
+  - {fileID: 1575535399}
   - {fileID: 61812793}
+  - {fileID: 45369922}

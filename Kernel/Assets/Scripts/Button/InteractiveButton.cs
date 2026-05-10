@@ -8,10 +8,10 @@ public class InteractiveButton : MonoBehaviour
     [SerializeField] private Texture2D nonActiveTexture;
     [SerializeField] private string textureShaderProperty = "_BaseMap";
 
-    [Header("Door")]
-    [SerializeField] private HingeDoor door;
+    [Header("ButtonPuzzle")]
+    [SerializeField] private ButtonPuzzle puzzle;
 
-    private bool _isActive = false;
+    [HideInInspector] public bool isActive = false;
 
     private void Awake()
     {
@@ -41,23 +41,19 @@ public class InteractiveButton : MonoBehaviour
 
     public void Interact()
     {
-        if (_isActive)
+        if (puzzle == null) return;
+
+        if (isActive)
         {
-            _isActive = false;
+            isActive = false;
             ApplyTexture(nonActiveTexture);
-            if (door != null)
-            {
-                door.Close();
-            }
+            puzzle.RefreshPuzzle();
         }
         else
         {
-            _isActive = true;
+            isActive = true;
             ApplyTexture(activeTexture);
-            if (door != null)
-            {
-                door.Open();
-            }
+            puzzle.RefreshPuzzle();
         }
     }
 }
