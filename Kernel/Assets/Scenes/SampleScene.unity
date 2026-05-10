@@ -1338,10 +1338,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2857225292192837975, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 2857225292192837975, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
-      propertyPath: m_LocalPosition.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2857225292192837975, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
@@ -5654,12 +5650,12 @@ MonoBehaviour:
   player: {fileID: 1323150481}
   cam: {fileID: 330585545}
   glovesID: 0
-  maxDistance: 18
+  maxDistance: 15
   targetMask:
     serializedVersion: 2
     m_Bits: 128
-  pullAcceleration: 45
-  maxPullSpeed: 16
+  pullAcceleration: 20
+  maxPullSpeed: 12
 --- !u!114 &1323150481 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 657185006897926158, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
