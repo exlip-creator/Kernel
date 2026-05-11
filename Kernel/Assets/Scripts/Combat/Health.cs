@@ -14,8 +14,14 @@ namespace Kernel.Combat
         [SerializeField] private float restartDelaySeconds = 1.75f;
         [SerializeField] private float fallImpulse = 1.5f;
 
+        [Header("Смерть врага")]
+        [Tooltip("Уничтожить объект без рэгдолла и без перезапуска сцены (для врагов с бластером).")]
+        [SerializeField] private bool simpleDeath;
+        [SerializeField] private float simpleDeathDestroyDelay;
+
         public float MaxHp => maxHp;
         public float CurrentHp => currentHp;
+        public bool IsDead => _dead;
 
         public event System.Action<float, float> HpChanged;
 
@@ -27,6 +33,7 @@ namespace Kernel.Combat
             currentHp = Mathf.Clamp(currentHp, 0f, maxHp);
             restartDelaySeconds = Mathf.Max(0f, restartDelaySeconds);
             fallImpulse = Mathf.Max(0f, fallImpulse);
+            simpleDeathDestroyDelay = Mathf.Max(0f, simpleDeathDestroyDelay);
         }
 
         private void Awake()
@@ -50,6 +57,12 @@ namespace Kernel.Combat
         private void Die()
         {
             _dead = true;
+
+            if (simpleDeath)
+            {
+                StartCoroutine(DestroySelfAfterSimpleDeathDelay());
+                return;
+            }
 
             // Disable common control scripts (safe even if missing).
             var controller = GetComponent<CharacterController>();
@@ -105,6 +118,14 @@ namespace Kernel.Combat
 
             Scene active = SceneManager.GetActiveScene();
             SceneManager.LoadScene(active.buildIndex);
+        }
+
+        private IEnumerator DestroySelfAfterSimpleDeathDelay()
+        {
+            if (simpleDeathDestroyDelay > 0f)
+                yield return new WaitForSeconds(simpleDeathDestroyDelay);
+
+            Destroy(gameObject);
         }
     }
 }

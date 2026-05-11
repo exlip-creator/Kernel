@@ -10,6 +10,12 @@ public class BlasterBolt : MonoBehaviour
     [SerializeField] private float speed = 75f;
     [SerializeField] private float defaultMaxDistance = 100f;
 
+    [Header("Ближний бой")]
+    [Tooltip("Луч начинает чуть сзади — попадания, когда снаряд или дуло внутри коллайдера врага, не пропадают.")]
+    [SerializeField] private float rayBackSkin = 0.45f;
+    [Tooltip("Если луч не нашёл цель — проверка сферой по траектории (враг вплотную / только CharacterController).")]
+    [SerializeField] private float closeProbeRadius = 0.22f;
+
     private float _damage;
     private LayerMask _hitMask;
     private Vector3 _direction;
@@ -50,16 +56,9 @@ public class BlasterBolt : MonoBehaviour
         float step = speed * Time.deltaTime;
         Vector3 o = transform.position;
 
-        RaycastHit[] hits = Physics.RaycastAll(o, _direction, step, _hitMask, QueryTriggerInteraction.Ignore);
-        if (hits.Length > 1)
-            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
-
-        foreach (RaycastHit hit in hits)
+        if (TryHitAlongStep(o, step, out Collider hitCol))
         {
-            if (ShouldIgnoreHit(hit.collider))
-                continue;
-
-            Health hp = hit.collider.GetComponentInParent<Health>();
+            Health hp = hitCol.GetComponentInParent<Health>();
             if (hp != null)
                 hp.TakeDamage(_damage);
 
@@ -77,5 +76,76 @@ public class BlasterBolt : MonoBehaviour
     {
         if (c == null || _ignoreHitsRoot == null) return false;
         return c.transform == _ignoreHitsRoot || c.transform.IsChildOf(_ignoreHitsRoot);
+    }
+
+    private bool TryHitAlongStep(Vector3 o, float step, out Collider hitCollider)
+    {
+        hitCollider = null;
+
+        float back = Mathf.Max(0f, rayBackSkin);
+        Vector3 rayStart = o - _direction * back;
+        float rayLen = step + back;
+
+        RaycastHit[] hits = Physics.RaycastAll(rayStart, _direction, rayLen, _hitMask, QueryTriggerInteraction.Ignore);
+        if (hits.Length > 1)
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+        const float rayEpsilon = 0.02f;
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.distance + rayEpsilon < back)
+                continue;
+
+            if (ShouldIgnoreHit(hit.collider))
+                continue;
+
+            hitCollider = hit.collider;
+            return true;
+        }
+
+        float r = Mathf.Max(0.05f, closeProbeRadius);
+        if (TryProbeOverlapSphere(o, r, out hitCollider))
+            return true;
+        if (step > 1e-4f && TryProbeOverlapSphere(o + _direction * (step * 0.5f), r, out hitCollider))
+            return true;
+        if (step > 1e-4f && TryProbeOverlapSphere(o + _direction * step, r, out hitCollider))
+            return true;
+
+        return false;
+    }
+
+    private bool TryProbeOverlapSphere(Vector3 center, float radius, out Collider hitCollider)
+    {
+        hitCollider = null;
+        Collider[] cols = Physics.OverlapSphere(center, radius, _hitMask, QueryTriggerInteraction.Ignore);
+        if (cols.Length == 0)
+            return false;
+
+        float best = float.MaxValue;
+        Collider bestCol = null;
+
+        foreach (Collider c in cols)
+        {
+            if (c == null || ShouldIgnoreHit(c))
+                continue;
+
+            Health hp = c.GetComponentInParent<Health>();
+            if (hp == null)
+                continue;
+
+            Vector3 p = c.bounds.ClosestPoint(center);
+            float d = (p - center).sqrMagnitude;
+            if (d < best)
+            {
+                best = d;
+                bestCol = c;
+            }
+        }
+
+        if (bestCol == null)
+            return false;
+
+        hitCollider = bestCol;
+        return true;
     }
 }

@@ -35,6 +35,8 @@ public class BlasterWeapon : MonoBehaviour
     [SerializeField] private float damage = 18f;
     [SerializeField] private float fireCooldown = 0.18f;
     [SerializeField] private LayerMask hitMask = ~0;
+    [Tooltip("Hitscan: луч начинает чуть сзади точки выстрела — не «пролетает» сквозь цель в упор.")]
+    [SerializeField] private float hitscanOriginBackOffset = 0.45f;
 
     [Header("Звук (опционально)")]
     [SerializeField] private AudioSource audioSource;
@@ -139,13 +141,21 @@ public class BlasterWeapon : MonoBehaviour
     {
         bestHit = default;
 
-        RaycastHit[] hits = Physics.RaycastAll(origin, direction, maxDistance, hitMask, QueryTriggerInteraction.Ignore);
+        float back = Mathf.Max(0f, hitscanOriginBackOffset);
+        Vector3 rayStart = origin - direction * back;
+        float rayLen = maxDistance + back;
+
+        RaycastHit[] hits = Physics.RaycastAll(rayStart, direction, rayLen, hitMask, QueryTriggerInteraction.Ignore);
         if (hits.Length == 0) return false;
         if (hits.Length > 1)
             System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
 
+        const float rayEpsilon = 0.02f;
         foreach (RaycastHit h in hits)
         {
+            if (h.distance + rayEpsilon < back)
+                continue;
+
             if (skipHitsOnOwner && IsUnderOwner(h.collider))
                 continue;
 
