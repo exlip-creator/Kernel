@@ -6,10 +6,6 @@ using UnityEngine.InputSystem;
 
 namespace Bit.Robot
 {
-    /// <summary>
-    /// Читает WASD / мышь и через старый Input Manager, и через новый Input System
-    /// (когда в проекте только Input System, GetAxis часто всегда 0).
-    /// </summary>
     internal static class BitInput
     {
         private const float MousePixelScale = 0.02f;
@@ -78,7 +74,7 @@ namespace Bit.Robot
             }
             catch
             {
-                // Ось Fire3 не задана в Input Manager — игнорируем.
+                
             }
 
 #if ENABLE_INPUT_SYSTEM
