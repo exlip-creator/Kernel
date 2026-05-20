@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
+using Kernel.Movement;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -89,6 +90,12 @@ namespace StarterAssets
         private Vector3 _externalVelocity;
         private float _externalAirborneTimer;
 
+        [Header("Ladder")]
+        [Tooltip("When inside a LadderClimbZone, vertical input (W/S) moves up/down and gravity is disabled.")]
+        public bool EnableLadders = true;
+
+        private LadderClimbZone _activeLadder;
+
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
@@ -158,9 +165,16 @@ namespace StarterAssets
         {
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
-            GroundedCheck();
-            Move();
+            if (_activeLadder != null && EnableLadders)
+            {
+                LadderMove();
+            }
+            else
+            {
+                JumpAndGravity();
+                GroundedCheck();
+                Move();
+            }
         }
 
         private void LateUpdate()
@@ -287,6 +301,12 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            if (_activeLadder != null && EnableLadders)
+            {
+                // In ladder mode gravity is handled by LadderMove().
+                return;
+            }
+
             if (Grounded)
             {
                 if (_externalAirborneTimer > 0.0f)
@@ -360,6 +380,70 @@ namespace StarterAssets
             if (_verticalVelocity < _terminalVelocity)
             {
                 _verticalVelocity += Gravity * Time.deltaTime;
+            }
+        }
+
+        private void LadderMove()
+        {
+            if (_activeLadder == null)
+                return;
+
+            // W/S drives climbing; no sprint/jump physics on ladder.
+            float climbInput = _input.analogMovement ? Mathf.Clamp(_input.move.y, -1f, 1f) : Mathf.Sign(_input.move.y);
+            if (Mathf.Abs(_input.move.y) < _threshold) climbInput = 0f;
+
+            // Optional quick exit with Jump.
+            if (_input.jump)
+            {
+                _activeLadder = null;
+                _input.jump = false;
+                _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                return;
+            }
+
+            // Keep the character roughly centered on the ladder.
+            Vector3 snapDelta = _activeLadder.GetSnapDelta(transform.position);
+            Vector3 snapMove = Vector3.MoveTowards(Vector3.zero, snapDelta, _activeLadder.snapSpeed * Time.deltaTime);
+
+            // Move along ladder up axis.
+            Vector3 climbMove = _activeLadder.Up * (climbInput * _activeLadder.climbSpeed * Time.deltaTime);
+
+            _externalVelocity = Vector3.zero;
+            _verticalVelocity = 0f;
+            Grounded = false;
+
+            _controller.Move(climbMove + snapMove);
+
+            if (_hasAnimator)
+            {
+                float animSpeed = Mathf.Abs(climbInput);
+                _animator.SetFloat(_animIDSpeed, animSpeed);
+                _animator.SetFloat(_animIDMotionSpeed, animSpeed);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!EnableLadders) return;
+            if (_activeLadder != null) return;
+
+            if (other.TryGetComponent(out LadderClimbZone ladder))
+            {
+                _activeLadder = ladder;
+                _externalVelocity = Vector3.zero;
+                _verticalVelocity = 0f;
+                _input.jump = false;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!EnableLadders) return;
+            if (_activeLadder == null) return;
+
+            if (other.TryGetComponent(out LadderClimbZone ladder) && ladder == _activeLadder)
+            {
+                _activeLadder = null;
             }
         }
 
