@@ -22,5 +22,11 @@ public class InteractionRaycaster : MonoBehaviour
         {
             button.Interact();
         }
+        var chest = hit.collider.GetComponentInParent<BoxOpening>();
+        if (chest != null)
+        {
+            Debug.Log("ПИЗДААА");
+            chest.Interact();
+        }
     }
 }
