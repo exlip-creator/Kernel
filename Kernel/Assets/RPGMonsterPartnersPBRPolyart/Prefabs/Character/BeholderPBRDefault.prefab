@@ -1602,8 +1602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d3122c4f8fb0645ba7b610b2334de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Kernel.Combat.Health
-  maxHp: 100
-  currentHp: 100
+  maxHp: 30
+  currentHp: 30
   restartSceneOnDeath: 0
   restartDelaySeconds: 1.75
   fallImpulse: 1.5
