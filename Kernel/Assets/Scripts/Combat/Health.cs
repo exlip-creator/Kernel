@@ -24,6 +24,7 @@ namespace Kernel.Combat
         public bool IsDead => _dead;
 
         public event System.Action<float, float> HpChanged;
+        public event System.Action Died;
 
         private bool _dead;
 
@@ -57,6 +58,7 @@ namespace Kernel.Combat
         private void Die()
         {
             _dead = true;
+            Died?.Invoke();
 
             if (simpleDeath)
             {
