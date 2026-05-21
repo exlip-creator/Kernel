@@ -1652,6 +1652,13 @@ MonoBehaviour:
   gravity: -18
   playerTag: Player
   targetOverride: {fileID: 0}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  probeDistance: 1.35
+  probeRadius: 0.42
+  steerStrength: 1.4
+  stuckSeconds: 0.55
 --- !u!1 &4530003306004163420
 GameObject:
   m_ObjectHideFlags: 0
