@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Kernel.Combat
 {
-    /// <summary>
-    /// Включает/выключает коллайдер зоны удара (обычно на AttackHitzone).
-    /// </summary>
     public sealed class AttackHitboxGate : MonoBehaviour
     {
         [SerializeField] private Collider hitCollider;

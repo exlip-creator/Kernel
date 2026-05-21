@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 8100000000000000001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8100000000000000011}
   - {fileID: 8100000000000000021}
@@ -73,13 +73,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.6
-  m_Radius: 1.1
+  m_Height: 2.4
+  m_Radius: 1.65
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_StepOffset: 0.45
+  m_SkinWidth: 0.12
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &8100000000000000005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,11 +94,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Kernel.Combat.SpiderBossAI
   playerTag: Player
   targetOverride: {fileID: 0}
-  moveSpeed: 2.2
+  moveSpeed: 3.3
   rotateSpeed: 360
-  stoppingDistance: 2.2
+  stoppingDistance: 3.3
   gravity: -18
-  attackRange: 2.8
+  attackRange: 4.2
   attackCooldown: 3
   attackWindup: 0.6
   attackActive: 0.35

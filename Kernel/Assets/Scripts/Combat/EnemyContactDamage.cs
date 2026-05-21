@@ -3,11 +3,7 @@ using UnityEngine;
 
 namespace Kernel.Combat
 {
-    /// <summary>
-    /// Урон по игроку в триггер-зоне (когти / тело). Повесьте на объект с Is Trigger.
-    /// Не бьёт <see cref="Health"/> на том же корне, что и этот скрипт (сам враг).
-    /// На объект с триггером добавляется kinematic Rigidbody — иначе с игроком на CharacterController события триггера часто не приходят.
-    /// </summary>
+    
     public sealed class EnemyContactDamage : MonoBehaviour
     {
         [Header("Цель")]

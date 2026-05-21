@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Kernel.Combat
 {
-    /// <summary>
-    /// Тестовый босс-паук: dormant до активации арены, затем преследование и атаки.
-    /// </summary>
     [RequireComponent(typeof(CharacterController))]
     public sealed class SpiderBossAI : MonoBehaviour
     {
@@ -247,7 +244,6 @@ namespace Kernel.Combat
             _target = p != null ? p.transform : null;
         }
 
-        // Animation Events (опционально на клипах атаки)
         public void OnAttackHit() => attackHitbox?.SetActive(true);
         public void OnAttackEnd() => attackHitbox?.SetActive(false);
     }

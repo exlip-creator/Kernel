@@ -3,9 +3,6 @@ using UnityEngine;
 
 namespace Kernel.Combat
 {
-    /// <summary>
-    /// Повесьте на объект с коллайдером Is Trigger. При входе игрока (тег по умолчанию Player) создаёт префаб врага в точке спавна.
-    /// </summary>
     public sealed class EnemySpawnTrigger : MonoBehaviour
     {
         [Header("Кого спавнить")]

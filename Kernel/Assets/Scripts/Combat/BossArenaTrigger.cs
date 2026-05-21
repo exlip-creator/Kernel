@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Kernel.Combat
 {
-    /// <summary>
-    /// Зона арены босса: при входе игрока активирует бой у <see cref="SpiderBossAI"/>.
-    /// </summary>
     public sealed class BossArenaTrigger : MonoBehaviour
     {
         [SerializeField] private SpiderBossAI spiderBoss;
@@ -13,6 +10,7 @@ namespace Kernel.Combat
 
         private bool _activated;
 
+        [System.Obsolete]
         private void Awake()
         {
             if (spiderBoss == null)

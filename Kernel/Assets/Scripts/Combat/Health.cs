@@ -66,7 +66,6 @@ namespace Kernel.Combat
                 return;
             }
 
-            // Disable common control scripts (safe even if missing).
             var controller = GetComponent<CharacterController>();
             var thirdPerson = GetComponent<StarterAssets.ThirdPersonController>();
             var inputs = GetComponent<StarterAssets.StarterAssetsInputs>();
@@ -88,7 +87,6 @@ namespace Kernel.Combat
                 controller.enabled = false;
             }
 
-            // Switch to physics so the character can fall.
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb == null)
                 rb = gameObject.AddComponent<Rigidbody>();
@@ -101,7 +99,7 @@ namespace Kernel.Combat
             if (col == null)
                 col = gameObject.AddComponent<CapsuleCollider>();
 
-            col.direction = 1; // Y axis
+            col.direction = 1; 
             col.height = capsuleHeight;
             col.radius = capsuleRadius;
             col.center = capsuleCenter;
