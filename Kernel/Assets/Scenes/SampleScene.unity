@@ -4299,16 +4299,26 @@ MonoBehaviour:
   target: {fileID: 1323150476}
   cameraDistance: 1.3
   mouseSensitivity: 4
-  minPitch: -85
-  maxPitch: 85
+  minPitch: -80
+  maxPitch: 80
   followSmoothTime: 0.18
   targetPivotOffset: {x: 0, y: 1.7, z: -0.3}
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  collisionSphereRadius: 0.22
-  obstructionPadding: 0.18
-  minCameraDistance: 0.85
+    m_Bits: 1
+  collisionSphereRadius: 0.3
+  obstructionPadding: 0.4
+  minCameraDistance: 0.1
+  castOriginOffset: 0.1
+  collisionSmoothTime: 0.12
+  collisionPullbackStep: 0.05
+  maxCollisionPullbackIterations: 12
+  ceilingProbeDistance: 2.5
+  ceilingProbeOriginUp: 0.2
+  ceilingTightHeadroom: 0.45
+  ceilingComfortHeadroom: 2.2
+  ceilingMinPitchWhenTight: -15
+  drawCollisionDebug: 0
 --- !u!1001 &331522401
 PrefabInstance:
   m_ObjectHideFlags: 0
