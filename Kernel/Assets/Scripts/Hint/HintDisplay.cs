@@ -34,4 +34,6 @@ public sealed class HintDisplay : MonoBehaviour
     }
 
     public void Hide() => panel.SetActive(false);
+
+    
 }
