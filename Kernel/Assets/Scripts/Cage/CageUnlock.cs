@@ -1,9 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// Открывает клетку (две поворотные створки, по две панели на каждой), если у игрока выбран ключ и он рядом.
-/// </summary>
+
 public sealed class CageUnlock : MonoBehaviour
 {
     [Header("Key")]
@@ -31,6 +29,9 @@ public sealed class CageUnlock : MonoBehaviour
     private Transform _playerTransform;
     private bool _isOpen;
     private bool _isOpening;
+
+    public bool IsOpen => _isOpen;
+    public event System.Action DoorsOpened;
 
     private void Reset()
     {
@@ -100,6 +101,7 @@ public sealed class CageUnlock : MonoBehaviour
 
         _isOpen = true;
         _isOpening = false;
+        DoorsOpened?.Invoke();
     }
 
     private IEnumerator RotatePivotAroundHinge(Transform pivot, float angle)
