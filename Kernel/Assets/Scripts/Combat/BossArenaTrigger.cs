@@ -32,6 +32,18 @@ namespace Kernel.Combat
             spiderBoss.ActivateCombat();
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            if (!IsUnderTaggedPlayer(other, playerTag))
+                return;
+
+            if (spiderBoss == null)
+                return;
+
+            spiderBoss.DeactivateCombat();
+            _activated = false;
+        }
+
         private static bool IsUnderTaggedPlayer(Collider other, string tag)
         {
             if (string.IsNullOrWhiteSpace(tag))
