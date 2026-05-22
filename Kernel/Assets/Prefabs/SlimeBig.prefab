@@ -159,7 +159,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a2bd071fed35e6c4fb29633a6ad90115, type: 2}
     - target: {fileID: 919132149155446097, guid: 042c9d113672b044a841f5cec06fab43, type: 3}
       propertyPath: m_Name
-      value: Slime 1
+      value: SlimeBig
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
