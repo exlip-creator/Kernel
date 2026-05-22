@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b8126f8852e8ce445b863671d7036215, type: 2}
+  - {fileID: 2100000, guid: ef14d3b1ed5deeb4483033ea869169de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,3 +127,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BlasterBolt
   speed: 120
   defaultMaxDistance: 100
+  rayBackSkin: 0.45
+  closeProbeRadius: 0.22
