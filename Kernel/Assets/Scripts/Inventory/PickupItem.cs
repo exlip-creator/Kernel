@@ -15,6 +15,8 @@ public class PickupItem : MonoBehaviour
     [Tooltip("Если инвентарь (Basics) висит на UI/отдельном объекте — укажи его сюда. Иначе скрипт ищет Basics на игроке или первый в сцене.")]
     [SerializeField] private Basics inventoryOverride;
 
+    [SerializeField] private string playerTag = "Player";
+
     [Header("Prompt")]
     [SerializeField] private GameObject promptRoot;
 
@@ -44,14 +46,16 @@ public class PickupItem : MonoBehaviour
     {
         SetPromptVisible(false);
         _inPickupRange = false;
+        RefreshNearbyPlayer();
     }
 
     private void Update()
     {
         if (spin)
-        {
             transform.Rotate(spinDegreesPerSecond * Time.deltaTime, Space.World);
-        }
+
+        if (_nearbyInventory == null || _playerProximityTransform == null)
+            RefreshNearbyPlayer();
 
         UpdatePickupRange();
 
@@ -79,10 +83,9 @@ public class PickupItem : MonoBehaviour
             return;
         }
 
-        float d = Vector3.Distance(transform.position, _playerProximityTransform.position);
+        float d = GetDistanceToPlayer(_playerProximityTransform);
         float maxD = Mathf.Max(0.05f, maxPickupDistance);
 
-        // Вышел из большого триггера или ушёл далеко — сбрасываем, чтобы не держать «залипший» контакт.
         if (d > maxD * 3f)
         {
             _nearbyInventory = null;
@@ -99,12 +102,36 @@ public class PickupItem : MonoBehaviour
         SetPromptVisible(ok);
     }
 
+    private float GetDistanceToPlayer(Transform player)
+    {
+        var cc = player.GetComponent<CharacterController>();
+        if (cc != null)
+        {
+            Vector3 playerCenter = cc.transform.TransformPoint(cc.center);
+            return Vector3.Distance(GetPickupPoint(), playerCenter);
+        }
+
+        return Vector3.Distance(GetPickupPoint(), player.position);
+    }
+
+    private Vector3 GetPickupPoint()
+    {
+        var col = GetComponent<Collider>();
+        if (col != null)
+            return col.bounds.center;
+
+        return transform.position;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!TryResolveInventory(other, out var inv)) return;
+        TryRegisterPlayerCollider(other);
+    }
 
-        _nearbyInventory = inv;
-        _playerProximityTransform = ResolvePlayerTransform(other);
+    private void OnTriggerStay(Collider other)
+    {
+        if (_nearbyInventory != null && _playerProximityTransform != null) return;
+        TryRegisterPlayerCollider(other);
     }
 
     private void OnTriggerExit(Collider other)
@@ -121,10 +148,82 @@ public class PickupItem : MonoBehaviour
         }
     }
 
+    private void TryRegisterPlayerCollider(Collider other)
+    {
+        if (!TryResolveInventory(other, out var inv)) return;
+
+        Transform player = ResolvePlayerTransform(other);
+        if (player == null) return;
+
+        _nearbyInventory = inv;
+        _playerProximityTransform = player;
+        UpdatePickupRange();
+    }
+
+    /// <summary>
+    /// Нужно, если предмет включили, пока игрок уже стоит в зоне (например, дроп с босса).
+    /// </summary>
+    private void RefreshNearbyPlayer()
+    {
+        if (!TryResolveInventory(null, out var inv)) return;
+
+        CharacterController[] controllers = Object.FindObjectsByType<CharacterController>(FindObjectsSortMode.None);
+        float maxD = Mathf.Max(0.05f, maxPickupDistance);
+        float triggerReach = GetTriggerReach();
+
+        CharacterController best = null;
+        float bestDist = float.MaxValue;
+
+        foreach (CharacterController cc in controllers)
+        {
+            if (cc == null || !cc.enabled || !cc.gameObject.activeInHierarchy)
+                continue;
+
+            if (!string.IsNullOrEmpty(playerTag) && !cc.CompareTag(playerTag))
+                continue;
+
+            float dist = Vector3.Distance(GetPickupPoint(), cc.transform.TransformPoint(cc.center));
+            if (dist > triggerReach + maxD)
+                continue;
+
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                best = cc;
+            }
+        }
+
+        if (best == null) return;
+
+        _nearbyInventory = inv;
+        _playerProximityTransform = best.transform;
+        UpdatePickupRange();
+    }
+
+    private float GetTriggerReach()
+    {
+        if (TryGetComponent<SphereCollider>(out var sphere))
+        {
+            float scale = Mathf.Max(transform.lossyScale.x, transform.lossyScale.y, transform.lossyScale.z);
+            return sphere.radius * scale;
+        }
+
+        var col = GetComponent<Collider>();
+        if (col != null)
+            return col.bounds.extents.magnitude;
+
+        return 0.5f;
+    }
+
     private static Transform ResolvePlayerTransform(Collider other)
     {
+        if (other == null) return null;
+
         var cc = other.GetComponentInParent<CharacterController>();
         if (cc != null) return cc.transform;
+
+        if (other.CompareTag("Player"))
+            return other.transform.root;
 
         var root = other.transform.root;
         if (root != null) return root;
@@ -140,11 +239,14 @@ public class PickupItem : MonoBehaviour
             return true;
         }
 
-        inv = other.GetComponentInParent<Basics>();
-        if (inv != null) return true;
+        if (other != null)
+        {
+            inv = other.GetComponentInParent<Basics>();
+            if (inv != null) return true;
 
-        inv = other.GetComponent<Basics>();
-        if (inv != null) return true;
+            inv = other.GetComponent<Basics>();
+            if (inv != null) return true;
+        }
 
         inv = Object.FindAnyObjectByType<Basics>();
         return inv != null;

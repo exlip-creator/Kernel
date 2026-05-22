@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class InteractionRaycaster : MonoBehaviour
@@ -15,18 +14,32 @@ public class InteractionRaycaster : MonoBehaviour
 
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, maxDistance, buttonLayer, QueryTriggerInteraction.Ignore)) return;
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, buttonLayer, QueryTriggerInteraction.Ignore))
+        {
+            var button = hit.collider.GetComponentInParent<InteractiveButton>();
+            if (button != null)
+            {
+                button.Interact();
+                return;
+            }
 
-        var button = hit.collider.GetComponentInParent<InteractiveButton>();
-        if (button != null)
-        {
-            button.Interact();
+            var chest = hit.collider.GetComponentInParent<BoxOpening>();
+            if (chest != null)
+            {
+                chest.Interact();
+                return;
+            }
+
+            var cage = hit.collider.GetComponentInParent<CageUnlock>();
+            if (cage != null && cage.TryInteract())
+                return;
         }
-        var chest = hit.collider.GetComponentInParent<BoxOpening>();
-        if (chest != null)
+
+        CageUnlock[] cages = Object.FindObjectsByType<CageUnlock>(FindObjectsSortMode.None);
+        for (int i = 0; i < cages.Length; i++)
         {
-            Debug.Log("ПИЗДААА");
-            chest.Interact();
+            if (cages[i] != null && cages[i].TryInteract())
+                return;
         }
     }
 }

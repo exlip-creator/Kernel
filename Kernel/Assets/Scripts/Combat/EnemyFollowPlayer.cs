@@ -2,9 +2,6 @@ using UnityEngine;
 
 namespace Kernel.Combat
 {
-    /// <summary>
-    /// Преследует игрока с обходом препятствий (рейкасты + анти-застревание).
-    /// </summary>
     [RequireComponent(typeof(CharacterController))]
     public sealed class EnemyFollowPlayer : MonoBehaviour
     {
