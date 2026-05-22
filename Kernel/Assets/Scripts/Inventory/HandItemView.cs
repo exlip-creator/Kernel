@@ -72,7 +72,7 @@ public class HandItemView : MonoBehaviour
         inventory = GetComponentInParent<Basics>();
         if (inventory == null && findInventoryInSceneIfMissing)
         {
-            inventory = Object.FindFirstObjectByType<Basics>();
+            inventory = Object.FindAnyObjectByType<Basics>();
         }
     }
 
