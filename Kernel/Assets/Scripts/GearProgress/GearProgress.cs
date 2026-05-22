@@ -26,14 +26,6 @@ public class GearProgress : MonoBehaviour
         RefreshHud();
     }
 
-    public bool TryCollect()
-    {
-        if (Collected >= Total) return false;
-        Collected++;
-        RefreshHud();
-        return true;
-    }
-
     public string GetProgressText()
     {
         return $"Шестеренки: {Collected}/{Total}";
@@ -43,5 +35,16 @@ public class GearProgress : MonoBehaviour
     {
         if (counterText != null)
             counterText.text = GetProgressText();
+    }
+
+    [SerializeField] private SlidingDoor gearDoor;
+    public bool TryCollect()
+    {
+        if (Collected >= Total) return false;
+        Collected++;
+        RefreshHud();
+        if (Collected >= Total && gearDoor != null)
+            gearDoor.Open();
+        return true;
     }
 }
