@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8100000000000000003}
   - component: {fileID: 8100000000000000004}
   - component: {fileID: 8100000000000000005}
+  - component: {fileID: 8100000000000000006}
   m_Layer: 0
   m_Name: SpiderBoss
   m_TagString: Untagged
@@ -97,7 +98,13 @@ MonoBehaviour:
   moveSpeed: 3.3
   rotateSpeed: 360
   stoppingDistance: 3.3
+  returnArrivalDistance: 0.85
   gravity: -18
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  groundProbeUp: 1.5
+  groundProbeDown: 4
   attackRange: 4.2
   attackCooldown: 3
   attackWindup: 0.6
@@ -296,3 +303,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Kernel.Combat.AttackHitboxGate
   hitCollider: {fileID: 8100000000000000032}
+--- !u!114 &8100000000000000006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8100000000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7c8d9e0f1a2436586978899aabbccdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Kernel.Combat.BossKeyDrop
+  bossHealth: {fileID: 8100000000000000003}
+  keyPickup: {fileID: 0}
+  dropOffset: {x: 0, y: 0.35, z: 0}
+  hideKeyUntilDrop: 1

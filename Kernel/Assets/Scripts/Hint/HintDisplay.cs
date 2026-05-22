@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public sealed class HintDisplay : MonoBehaviour
 {
@@ -18,6 +17,7 @@ public sealed class HintDisplay : MonoBehaviour
         }
 
         instance = this;
+        TmpFontUtility.EnsureCyrillicFont(hintText);
         Hide();
     }
 
@@ -29,7 +29,7 @@ public sealed class HintDisplay : MonoBehaviour
             return;
         }
 
-        hintText.text = message;
+        TmpFontUtility.SetText(hintText, message);
         panel.SetActive(true);
     }
 

@@ -23,6 +23,7 @@ public class GearProgress : MonoBehaviour
 
     private void Start()
     {
+        TmpFontUtility.EnsureCyrillicFont(counterText);
         RefreshHud();
     }
 
@@ -34,7 +35,7 @@ public class GearProgress : MonoBehaviour
     private void RefreshHud()
     {
         if (counterText != null)
-            counterText.text = GetProgressText();
+            TmpFontUtility.SetText(counterText, GetProgressText());
     }
 
     [SerializeField] private SlidingDoor gearDoor;

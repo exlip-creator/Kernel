@@ -32,6 +32,7 @@ namespace Kernel.Combat
 
         [Header("Атака")]
         [SerializeField] private float attackRange = 2.8f;
+        [SerializeField] private float attackReachPadding = 0.35f;
         [SerializeField] private float attackCooldown = 3f;
         [SerializeField] private float attackWindup = 0.6f;
         [SerializeField] private float attackActive = 0.35f;
@@ -179,7 +180,7 @@ namespace Kernel.Combat
             flatDelta.y = 0f;
             float dist = flatDelta.magnitude;
 
-            if (dist <= attackRange && Time.time >= _nextAttackTime)
+            if (dist <= GetEffectiveAttackRange() && Time.time >= _nextAttackTime)
             {
                 BeginAttack();
                 return;
@@ -187,7 +188,7 @@ namespace Kernel.Combat
 
             float speedParam = 0f;
 
-            if (dist > stoppingDistance && dist > 0.02f)
+            if (dist > GetEffectiveStoppingDistance() && dist > 0.02f)
             {
                 Vector3 dir = flatDelta / dist;
                 Quaternion look = Quaternion.LookRotation(dir);
@@ -439,6 +440,37 @@ namespace Kernel.Combat
         }
 
         private float GetReturnFinishDistance() => Mathf.Max(returnArrivalDistance, _cc.radius * 0.35f);
+
+        private float GetMinCenterDistance()
+        {
+            float bossRadius = GetScaledRadius(_cc, transform);
+            float targetRadius = 0.5f;
+
+            if (_target != null && _target.TryGetComponent(out CharacterController targetCc))
+                targetRadius = GetScaledRadius(targetCc, _target);
+
+            return bossRadius + targetRadius + _cc.skinWidth + 0.05f;
+        }
+
+        private static float GetScaledRadius(CharacterController cc, Transform owner)
+        {
+            Vector3 scale = owner.lossyScale;
+            float horizontalScale = Mathf.Max(scale.x, scale.z);
+            return cc.radius * horizontalScale;
+        }
+
+        private float GetEffectiveAttackRange()
+        {
+            float minCenter = GetMinCenterDistance();
+            return Mathf.Max(attackRange, minCenter + attackReachPadding);
+        }
+
+        private float GetEffectiveStoppingDistance()
+        {
+            float minCenter = GetMinCenterDistance();
+            float stop = Mathf.Max(stoppingDistance, minCenter - 0.1f);
+            return Mathf.Min(stop, GetEffectiveAttackRange() - 0.05f);
+        }
 
         private bool IsLocomotionWalkPlaying()
         {
