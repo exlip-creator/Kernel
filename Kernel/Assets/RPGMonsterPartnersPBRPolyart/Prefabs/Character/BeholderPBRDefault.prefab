@@ -1609,6 +1609,12 @@ MonoBehaviour:
   fallImpulse: 1.5
   simpleDeath: 1
   simpleDeathDestroyDelay: 0
+  audioSource: {fileID: 0}
+  deathClip: {fileID: 8300000, guid: 9797515068bf52f44bbebcce7b9968a6, type: 3}
+  fallImpactClip: {fileID: 0}
+  deathVolume: 1
+  fallImpactVolume: 1
+  fallImpactMinSpeed: 2.5
 --- !u!143 &-426625976305799591
 CharacterController:
   m_ObjectHideFlags: 0

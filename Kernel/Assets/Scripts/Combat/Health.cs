@@ -19,6 +19,16 @@ namespace Kernel.Combat
         [SerializeField] private bool simpleDeath;
         [SerializeField] private float simpleDeathDestroyDelay;
 
+        [Header("Звук")]
+        [Tooltip("Если пусто — создаётся на этом объекте при смерти.")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip deathClip;
+        [SerializeField] private AudioClip fallImpactClip;
+        [SerializeField, Range(0f, 1f)] private float deathVolume = 1f;
+        [SerializeField, Range(0f, 1f)] private float fallImpactVolume = 1f;
+        [Tooltip("Минимальная скорость удара для звука падения.")]
+        [SerializeField] private float fallImpactMinSpeed = 2.5f;
+
         public float MaxHp => maxHp;
         public float CurrentHp => currentHp;
         public bool IsDead => _dead;
@@ -35,6 +45,7 @@ namespace Kernel.Combat
             restartDelaySeconds = Mathf.Max(0f, restartDelaySeconds);
             fallImpulse = Mathf.Max(0f, fallImpulse);
             simpleDeathDestroyDelay = Mathf.Max(0f, simpleDeathDestroyDelay);
+            fallImpactMinSpeed = Mathf.Max(0f, fallImpactMinSpeed);
         }
 
         private void Awake()
@@ -59,6 +70,7 @@ namespace Kernel.Combat
         {
             _dead = true;
             Died?.Invoke();
+            PlayDeathSound();
 
             if (simpleDeath)
             {
@@ -109,8 +121,44 @@ namespace Kernel.Combat
             if (fallImpulse > 0f)
                 rb.AddForce(Vector3.down * fallImpulse, ForceMode.Impulse);
 
+            if (fallImpactClip != null)
+            {
+                DeathFallImpactSound impact = GetComponent<DeathFallImpactSound>();
+                if (impact == null)
+                    impact = gameObject.AddComponent<DeathFallImpactSound>();
+                impact.Configure(fallImpactClip, fallImpactVolume, fallImpactMinSpeed, ResolveAudioSource());
+            }
+
             if (restartSceneOnDeath)
                 StartCoroutine(RestartSceneAfterDelay());
+        }
+
+        private AudioSource ResolveAudioSource()
+        {
+            if (audioSource != null)
+                return audioSource;
+
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+                audioSource = gameObject.AddComponent<AudioSource>();
+
+            audioSource.playOnAwake = false;
+            return audioSource;
+        }
+
+        private void PlayDeathSound()
+        {
+            if (deathClip == null)
+                return;
+
+            // Враги (simpleDeath) сразу Destroy — PlayOneShot на объекте обрывается.
+            if (simpleDeath)
+            {
+                AudioSource.PlayClipAtPoint(deathClip, transform.position, deathVolume);
+                return;
+            }
+
+            ResolveAudioSource().PlayOneShot(deathClip, deathVolume);
         }
 
         private IEnumerator RestartSceneAfterDelay()
