@@ -60,8 +60,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeSmall
       objectReference: {fileID: 0}
+    - target: {fileID: 4035550335557870645, guid: 3cd7e264361a542419010d44eed12528, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 1.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8221508965856574140, guid: 3cd7e264361a542419010d44eed12528, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cd7e264361a542419010d44eed12528, type: 3}

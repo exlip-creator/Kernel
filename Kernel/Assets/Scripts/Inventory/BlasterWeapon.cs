@@ -42,6 +42,10 @@ public class BlasterWeapon : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip fireClip;
 
+    [Header("Частицы (опционально)")]
+    [Tooltip("Дочерний Particle System на Muzzle: Looping и Play On Awake выключены.")]
+    [SerializeField] private ParticleSystem muzzleParticles;
+
     [Header("Отладка")]
     [SerializeField] private bool drawDebugRay;
 
@@ -130,8 +134,10 @@ public class BlasterWeapon : MonoBehaviour
                 Debug.DrawLine(origin, hit.point, Color.yellow, 0.15f);
         }
 
-        if (audioSource != null && fireClip != null)
-            audioSource.PlayOneShot(fireClip);
+        PlayFireSound(origin);
+
+        if (muzzleParticles != null)
+            muzzleParticles.Play();
 
         if (drawDebugRay)
             Debug.DrawRay(origin, direction * range, Color.cyan, 0.25f);
@@ -178,6 +184,17 @@ public class BlasterWeapon : MonoBehaviour
         if (d.sqrMagnitude < 1e-8f)
             d = muzzle.forward;
         return d.normalized;
+    }
+
+    private void PlayFireSound(Vector3 position)
+    {
+        if (fireClip == null)
+            return;
+
+        if (audioSource != null)
+            audioSource.PlayOneShot(fireClip);
+        else
+            AudioSource.PlayClipAtPoint(fireClip, position);
     }
 
     private static bool GetFireDown()
