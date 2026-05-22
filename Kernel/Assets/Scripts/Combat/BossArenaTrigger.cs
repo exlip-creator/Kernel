@@ -10,7 +10,6 @@ namespace Kernel.Combat
 
         private bool _activated;
 
-        [System.Obsolete]
         private void Awake()
         {
             if (spiderBoss == null)

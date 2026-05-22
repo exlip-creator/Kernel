@@ -23,7 +23,6 @@ namespace Kernel.Combat
         [SerializeField] private float rotateSpeed = 360f;
         [SerializeField] private float stoppingDistance = 2.2f;
         [SerializeField] private float returnArrivalDistance = 0.85f;
-        [SerializeField] private float returnStuckSeconds = 0.4f;
         [SerializeField] private float gravity = -18f;
 
         [Header("Земля")]
@@ -58,7 +57,6 @@ namespace Kernel.Combat
         private Vector3 _spawnPosition;
         private Quaternion _spawnRotation;
         private float _groundY;
-        private float _returnStuckTimer;
 
         public bool CombatActive => _state != BossState.Dormant && _state != BossState.Dead && _state != BossState.Return;
 
@@ -122,7 +120,6 @@ namespace Kernel.Combat
             _hitboxActive = false;
             attackHitbox?.SetActive(false);
             _verticalVelocity = -2f;
-            _returnStuckTimer = 0f;
 
             if (GetFlatDistanceToSpawn() <= GetReturnFinishDistance())
             {
@@ -244,18 +241,7 @@ namespace Kernel.Combat
 
             Vector3 before = transform.position;
             MoveOnGround(dir * moveSpeed);
-            float moved = Vector3.Distance(before, transform.position);
-
-            if (moved < 0.015f)
-                _returnStuckTimer += Time.deltaTime;
-            else
-                _returnStuckTimer = 0f;
-
-            if (_returnStuckTimer >= returnStuckSeconds)
-            {
-                FinishReturn();
-                return;
-            }
+            float moved = HorizontalDistance(before, transform.position);
 
             SetAnimatorSpeed(moved > 0.02f ? 1f : 0f);
         }
@@ -263,7 +249,10 @@ namespace Kernel.Combat
         private void FinishReturn()
         {
             Vector3 pos = _spawnPosition;
-            pos.y = _groundY;
+            if (TrySampleGroundY(_spawnPosition.x, _spawnPosition.z, _spawnPosition.y, out float rootY))
+                pos.y = rootY;
+            else
+                pos.y = _groundY;
 
             _cc.enabled = false;
             transform.SetPositionAndRotation(pos, _spawnRotation);
@@ -322,10 +311,29 @@ namespace Kernel.Combat
 
         private float GetRootYForFeet(float feetY) => feetY - (_cc.center.y - _cc.height * 0.5f);
 
-        private bool TrySampleGroundY(float x, float z, out float rootY)
+        private bool UsesLocalGroundSampling() =>
+            _state == BossState.Chase || _state == BossState.Return || _state == BossState.Attack;
+
+        private float GetGroundYAt(float x, float z)
+        {
+            float referenceY = transform.position.y;
+            if (TrySampleGroundY(x, z, referenceY, out float rootY))
+                return rootY;
+
+            return _groundY;
+        }
+
+        private static float HorizontalDistance(Vector3 a, Vector3 b)
+        {
+            a.y = 0f;
+            b.y = 0f;
+            return Vector3.Distance(a, b);
+        }
+
+        private bool TrySampleGroundY(float x, float z, float referenceY, out float rootY)
         {
             rootY = 0f;
-            Vector3 rayOrigin = new Vector3(x, _groundY + groundProbeUp, z);
+            Vector3 rayOrigin = new Vector3(x, referenceY + groundProbeUp, z);
             RaycastHit[] hits = Physics.RaycastAll(
                 rayOrigin,
                 Vector3.down,
@@ -354,7 +362,11 @@ namespace Kernel.Combat
 
         private void ClampVerticalDrift()
         {
-            float deltaY = _groundY - transform.position.y;
+            float targetY = UsesLocalGroundSampling()
+                ? GetGroundYAt(transform.position.x, transform.position.z)
+                : _groundY;
+
+            float deltaY = targetY - transform.position.y;
             if (Mathf.Abs(deltaY) <= 0.02f)
             {
                 if (_cc.isGrounded)
@@ -364,7 +376,7 @@ namespace Kernel.Combat
 
             if (deltaY < -0.35f)
             {
-                SetRootY(_groundY);
+                SetRootY(targetY);
                 return;
             }
 
@@ -415,7 +427,7 @@ namespace Kernel.Combat
             _spawnRotation = transform.rotation;
             _groundY = _spawnPosition.y;
 
-            if (TrySampleGroundY(_spawnPosition.x, _spawnPosition.z, out float sampledY))
+            if (TrySampleGroundY(_spawnPosition.x, _spawnPosition.z, _spawnPosition.y, out float sampledY))
                 _groundY = sampledY;
         }
 
