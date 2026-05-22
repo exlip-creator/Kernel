@@ -146,7 +146,7 @@ public class PickupItem : MonoBehaviour
         inv = other.GetComponent<Basics>();
         if (inv != null) return true;
 
-        inv = Object.FindFirstObjectByType<Basics>();
+        inv = Object.FindAnyObjectByType<Basics>();
         return inv != null;
     }
 

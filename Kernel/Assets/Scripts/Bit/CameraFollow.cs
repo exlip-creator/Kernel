@@ -199,7 +199,7 @@ namespace Bit.Robot
         private float GetHardMinDistance()
         {
             float nearClip = _camera != null ? _camera.nearClipPlane : 0.3f;
-            return collisionSphereRadius + nearClip + 0.02f;
+            return collisionSphereRadius + nearClip + obstructionPadding;
         }
 
         private float FindClearCameraDistance(Vector3 pivot, Vector3 rayDir, float desiredDistance)

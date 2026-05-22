@@ -79,7 +79,7 @@ public class BlasterWeapon : MonoBehaviour
         if (inventory != null) return;
         inventory = GetComponentInParent<Basics>();
         if (inventory == null && findInventoryInSceneIfMissing)
-            inventory = Object.FindFirstObjectByType<Basics>();
+            inventory = Object.FindAnyObjectByType<Basics>();
     }
 
     private bool BlasterEquipped()
