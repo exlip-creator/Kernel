@@ -4635,7 +4635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 657185006897926158, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: RotationSmoothTime
-      value: 0.13
+      value: 0.06
       objectReference: {fileID: 0}
     - target: {fileID: 657185006897926158, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: FootstepAudioVolume
@@ -5863,18 +5863,18 @@ MonoBehaviour:
   mouseSensitivity: 4
   minPitch: -80
   maxPitch: 80
-  followSmoothTime: 0.18
-  followMaxSpeed: 28
+  followSmoothTime: 0.1
+  followMaxSpeed: 40
   distanceSmoothTimeIn: 0.1
-  distanceSmoothTimeOut: 0.05
+  distanceSmoothTimeOut: 0.12
   pivotOffsetUsesYawOnly: 1
   targetPivotOffset: {x: 0, y: 1.7, z: -0.3}
   obstructionMask:
     serializedVersion: 2
-    m_Bits: 1
-  collisionSphereRadius: 0.3
-  obstructionPadding: 0.4
-  minCameraDistance: 0.1
+    m_Bits: 0
+  collisionSphereRadius: 0.25
+  obstructionPadding: 0.15
+  minCameraDistance: 0.85
   collisionResolveStep: 0.04
   ceilingProbeDistance: 2.5
   ceilingProbeOriginUp: 0.2

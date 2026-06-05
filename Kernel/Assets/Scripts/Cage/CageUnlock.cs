@@ -147,8 +147,7 @@ public sealed class CageUnlock : MonoBehaviour
 
     private void RefreshPlayerProximity()
     {
-        CharacterController[] controllers =
-            Object.FindObjectsByType<CharacterController>(FindObjectsSortMode.None);
+        CharacterController[] controllers = Object.FindObjectsByType<CharacterController>();
 
         float maxD = Mathf.Max(0.5f, maxInteractDistance);
         Vector3 interactPoint = GetInteractionPoint();

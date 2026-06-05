@@ -55,6 +55,9 @@ namespace Bit.Robot
         private Vector3 _debugHitPoint;
         private bool _debugBlocked;
 
+        public float Yaw => _yaw;
+        public float Pitch => _pitch;
+
         private void Awake()
         {
             _camera = GetComponent<Camera>();
@@ -154,15 +157,21 @@ namespace Bit.Robot
             Quaternion orbitRot = Quaternion.Euler(_pitch, _yaw, 0f);
             Vector3 rayDir = orbitRot * Vector3.back;
 
-            float targetDistance = FindClearCameraDistance(pivotWorld, rayDir, cameraDistance);
-            float distanceSmoothTime = targetDistance < _smoothedDistance
-                ? distanceSmoothTimeIn
-                : distanceSmoothTimeOut;
-            _smoothedDistance = Mathf.SmoothDamp(
-                _smoothedDistance,
-                targetDistance,
-                ref _distanceVelocity,
-                distanceSmoothTime);
+            float targetDistance = FindClearCameraDistance(_smoothedPivot, rayDir, cameraDistance);
+            if (targetDistance < _smoothedDistance - 0.01f)
+            {
+                _smoothedDistance = targetDistance;
+                _distanceVelocity = 0f;
+            }
+            else
+            {
+                float distanceSmoothTime = distanceSmoothTimeOut;
+                _smoothedDistance = Mathf.SmoothDamp(
+                    _smoothedDistance,
+                    targetDistance,
+                    ref _distanceVelocity,
+                    distanceSmoothTime);
+            }
             CacheDebugState(_smoothedPivot, rayDir, _smoothedDistance);
 
             transform.position = _smoothedPivot + rayDir * _smoothedDistance;
@@ -180,12 +189,15 @@ namespace Bit.Robot
         private static LayerMask BuildObstructionMask(LayerMask serializedMask)
         {
             int mask = serializedMask.value;
-            if (mask == 0)
+            if (mask == 0 || mask == 1)
                 mask = Physics.DefaultRaycastLayers;
 
             ExcludeLayer(ref mask, "Player");
             ExcludeLayer(ref mask, "UI");
             ExcludeLayer(ref mask, "Ignore Raycast");
+            ExcludeLayer(ref mask, "TransparentFX");
+            ExcludeLayer(ref mask, "Button");
+            ExcludeLayer(ref mask, "Magnetic");
             return mask;
         }
 
@@ -206,27 +218,32 @@ namespace Bit.Robot
         {
             _debugBlocked = false;
             float hardMin = GetHardMinDistance();
-            float startDistance = Mathf.Max(desiredDistance, hardMin);
+            float maxDistance = Mathf.Max(desiredDistance, hardMin);
 
-            if (IsCameraPlacementClear(pivot, rayDir, startDistance, out _))
-                return startDistance;
+            if (IsCameraPlacementClear(pivot, rayDir, maxDistance, out _))
+                return maxDistance;
 
             _debugBlocked = true;
 
-            float firstBlocked = startDistance;
-            for (float d = startDistance; d >= hardMin; d -= collisionResolveStep)
-            {
-                if (IsCameraPlacementClear(pivot, rayDir, d, out Vector3 hitPoint))
-                {
-                    _debugHitPoint = hitPoint;
-                    return Mathf.Max(d, hardMin);
-                }
+            float clearDistance = hardMin;
+            float blockedDistance = maxDistance;
 
-                firstBlocked = d;
+            for (int i = 0; i < 10; i++)
+            {
+                float mid = (clearDistance + blockedDistance) * 0.5f;
+                if (IsCameraPlacementClear(pivot, rayDir, mid, out Vector3 hitPoint))
+                {
+                    clearDistance = mid;
+                    _debugHitPoint = hitPoint;
+                }
+                else
+                {
+                    blockedDistance = mid;
+                    _debugHitPoint = pivot + rayDir * mid;
+                }
             }
 
-            _debugHitPoint = pivot + rayDir * firstBlocked;
-            return hardMin;
+            return Mathf.Max(clearDistance - obstructionPadding, hardMin);
         }
 
         private bool IsCameraPlacementClear(Vector3 pivot, Vector3 rayDir, float distance, out Vector3 obstructionPoint)
@@ -241,31 +258,57 @@ namespace Bit.Robot
                 obstructionMask,
                 QueryTriggerInteraction.Ignore);
 
-            if (overlapCount > 0)
+            for (int i = 0; i < overlapCount; i++)
             {
-                obstructionPoint = OverlapBuffer[0].bounds.ClosestPoint(camPos);
+                if (IsIgnoredObstructionCollider(OverlapBuffer[i]))
+                    continue;
+
+                obstructionPoint = OverlapBuffer[i].bounds.ClosestPoint(camPos);
                 return false;
             }
 
-            Vector3 lineOrigin = pivot + rayDir * collisionSphereRadius;
-            float lineLength = Mathf.Max(distance - collisionSphereRadius, 0.001f);
-            Vector3 lineDir = rayDir;
-
-            if (Physics.Raycast(lineOrigin, lineDir, out RaycastHit hit, lineLength, obstructionMask,
-                    QueryTriggerInteraction.Ignore))
+            Vector3 toCamera = camPos - pivot;
+            float lineLength = toCamera.magnitude;
+            if (lineLength > 0.001f)
             {
-                obstructionPoint = hit.point;
-                return false;
-            }
+                Vector3 lineDir = toCamera / lineLength;
+                if (Physics.Raycast(pivot, lineDir, out RaycastHit hit, lineLength, obstructionMask,
+                        QueryTriggerInteraction.Ignore))
+                {
+                    if (!IsIgnoredObstructionCollider(hit.collider))
+                    {
+                        obstructionPoint = hit.point;
+                        return false;
+                    }
+                }
 
-            if (Physics.SphereCast(lineOrigin, collisionSphereRadius, lineDir, out hit, lineLength,
-                    obstructionMask, QueryTriggerInteraction.Ignore))
-            {
-                obstructionPoint = hit.point;
-                return false;
+                if (Physics.SphereCast(pivot, collisionSphereRadius, lineDir, out hit, lineLength,
+                        obstructionMask, QueryTriggerInteraction.Ignore))
+                {
+                    if (!IsIgnoredObstructionCollider(hit.collider))
+                    {
+                        obstructionPoint = hit.point;
+                        return false;
+                    }
+                }
             }
 
             return true;
+        }
+
+        private static bool IsIgnoredObstructionCollider(Collider collider)
+        {
+            if (collider == null)
+                return true;
+
+            if (collider.isTrigger)
+                return true;
+
+            int layer = collider.gameObject.layer;
+            if (layer == LayerMask.NameToLayer("Player"))
+                return true;
+
+            return collider.CompareTag("Player");
         }
 
         private float GetEffectiveMinPitch(Vector3 pivot)

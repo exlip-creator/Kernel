@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
+using Bit.Robot;
 using Kernel.Movement;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -76,6 +77,9 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Tooltip("When true, look rotation is handled by CameraFollow instead of CinemachineCameraTarget")]
+        public bool UseExternalCamera = true;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -114,6 +118,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private CameraFollow _cameraFollow;
 
         private const float _threshold = 0.01f;
 
@@ -139,6 +144,9 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+            if (_mainCamera != null)
+                _cameraFollow = _mainCamera.GetComponent<CameraFollow>();
         }
 
         private void Start()
@@ -179,7 +187,8 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (!UseExternalCamera)
+                CameraRotation();
         }
 
         private void AssignAnimationIDs()
@@ -271,12 +280,13 @@ namespace StarterAssets
             // if there is a move input rotate player when the player is moving
             if (_input.move != Vector2.zero)
             {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                  _mainCamera.transform.eulerAngles.y;
+                float cameraYaw = _cameraFollow != null
+                    ? _cameraFollow.Yaw
+                    : _mainCamera.transform.eulerAngles.y;
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                     RotationSmoothTime);
 
-                // rotate to face input direction relative to camera position
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
             }
 
