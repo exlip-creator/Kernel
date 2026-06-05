@@ -167,7 +167,7 @@ public class PickupItem : MonoBehaviour
     {
         if (!TryResolveInventory(null, out var inv)) return;
 
-        CharacterController[] controllers = Object.FindObjectsByType<CharacterController>(FindObjectsSortMode.None);
+        CharacterController[] controllers = Object.FindObjectsByType<CharacterController>();
         float maxD = Mathf.Max(0.05f, maxPickupDistance);
         float triggerReach = GetTriggerReach();
 

@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
+using Bit.Robot;
 using Kernel.Movement;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
@@ -76,6 +77,9 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        [Tooltip("When true, look rotation is handled by CameraFollow instead of CinemachineCameraTarget")]
+        public bool UseExternalCamera = true;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -114,6 +118,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        private CameraFollow _cameraFollow;
 
         private const float _threshold = 0.01f;
 
@@ -139,6 +144,9 @@ namespace StarterAssets
             {
                 _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             }
+
+            if (_mainCamera != null)
+                _cameraFollow = _mainCamera.GetComponent<CameraFollow>();
         }
 
         private void Start()
@@ -179,7 +187,26 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (!UseExternalCamera)
+            {
+                CameraRotation();
+                return;
+            }
+
+            ApplyFacingRotation();
+        }
+
+        private void ApplyFacingRotation()
+        {
+            if (_activeLadder != null && EnableLadders)
+                return;
+
+            if (_input.move == Vector2.zero)
+                _targetRotation = GetCameraYaw();
+
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                RotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
         private void AssignAnimationIDs()
@@ -267,19 +294,9 @@ namespace StarterAssets
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-            // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is a move input rotate player when the player is moving
+            float cameraYaw = GetCameraYaw();
             if (_input.move != Vector2.zero)
-            {
-                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                                  _mainCamera.transform.eulerAngles.y;
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-                    RotationSmoothTime);
-
-                // rotate to face input direction relative to camera position
-                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-            }
-
+                _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
@@ -445,6 +462,14 @@ namespace StarterAssets
             {
                 _activeLadder = null;
             }
+        }
+
+        private float GetCameraYaw()
+        {
+            if (_cameraFollow != null)
+                return _cameraFollow.Yaw;
+
+            return _mainCamera != null ? _mainCamera.transform.eulerAngles.y : transform.eulerAngles.y;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)

@@ -13,7 +13,7 @@ namespace Kernel.Combat
         private void Awake()
         {
             if (spiderBoss == null)
-                spiderBoss = FindFirstObjectByType<SpiderBossAI>();
+                spiderBoss = FindAnyObjectByType<SpiderBossAI>();
         }
 
         private void OnTriggerEnter(Collider other)
