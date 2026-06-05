@@ -20,7 +20,7 @@ namespace Bit.Robot
         [SerializeField] private float distanceSmoothTimeIn = 0.1f;
         [SerializeField] private float distanceSmoothTimeOut = 0.05f;
         [SerializeField] private bool pivotOffsetUsesYawOnly = true;
-        [SerializeField] private Vector3 targetPivotOffset = new Vector3(0f, 1.67f, -0.3f);
+        [SerializeField] private Vector3 targetPivotOffset = new Vector3(0f, 1.67f, 0f);
 
         [Header("Collision")]
         [SerializeField] private LayerMask obstructionMask;
@@ -43,7 +43,7 @@ namespace Bit.Robot
 
         private float _pitch;
         private float _yaw;
-        private Vector3 _smoothVelocity;
+        private float _pivotVerticalVelocity;
         private Vector3 _smoothedPivot;
         private float _smoothedDistance;
         private float _distanceVelocity;
@@ -142,10 +142,12 @@ namespace Bit.Robot
             }
 
             Vector3 pivotWorld = GetPivotWorld(target);
-            _smoothedPivot = Vector3.SmoothDamp(
-                _smoothedPivot,
-                pivotWorld,
-                ref _smoothVelocity,
+            _smoothedPivot.x = pivotWorld.x;
+            _smoothedPivot.z = pivotWorld.z;
+            _smoothedPivot.y = Mathf.SmoothDamp(
+                _smoothedPivot.y,
+                pivotWorld.y,
+                ref _pivotVerticalVelocity,
                 followSmoothTime,
                 followMaxSpeed);
 
@@ -181,7 +183,7 @@ namespace Bit.Robot
         private Vector3 GetPivotWorld(Transform followTarget)
         {
             Vector3 offset = pivotOffsetUsesYawOnly
-                ? Quaternion.Euler(0f, followTarget.eulerAngles.y, 0f) * targetPivotOffset
+                ? Quaternion.Euler(0f, _yaw, 0f) * targetPivotOffset
                 : followTarget.rotation * targetPivotOffset;
             return followTarget.position + offset;
         }

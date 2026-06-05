@@ -5868,7 +5868,7 @@ MonoBehaviour:
   distanceSmoothTimeIn: 0.1
   distanceSmoothTimeOut: 0.12
   pivotOffsetUsesYawOnly: 1
-  targetPivotOffset: {x: 0, y: 1.7, z: -0.3}
+  targetPivotOffset: {x: 0, y: 1.7, z: 0}
   obstructionMask:
     serializedVersion: 2
     m_Bits: 0

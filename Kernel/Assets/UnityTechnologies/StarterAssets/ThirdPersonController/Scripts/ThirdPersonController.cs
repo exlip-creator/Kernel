@@ -188,7 +188,25 @@ namespace StarterAssets
         private void LateUpdate()
         {
             if (!UseExternalCamera)
+            {
                 CameraRotation();
+                return;
+            }
+
+            ApplyFacingRotation();
+        }
+
+        private void ApplyFacingRotation()
+        {
+            if (_activeLadder != null && EnableLadders)
+                return;
+
+            if (_input.move == Vector2.zero)
+                _targetRotation = GetCameraYaw();
+
+            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                RotationSmoothTime);
+            transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
 
         private void AssignAnimationIDs()
@@ -276,20 +294,9 @@ namespace StarterAssets
             // normalise input direction
             Vector3 inputDirection = new Vector3(_input.move.x, 0.0f, _input.move.y).normalized;
 
-            // note: Vector2's != operator uses approximation so is not floating point error prone, and is cheaper than magnitude
-            // if there is a move input rotate player when the player is moving
+            float cameraYaw = GetCameraYaw();
             if (_input.move != Vector2.zero)
-            {
-                float cameraYaw = _cameraFollow != null
-                    ? _cameraFollow.Yaw
-                    : _mainCamera.transform.eulerAngles.y;
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraYaw;
-                float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
-                    RotationSmoothTime);
-
-                transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-            }
-
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
@@ -455,6 +462,14 @@ namespace StarterAssets
             {
                 _activeLadder = null;
             }
+        }
+
+        private float GetCameraYaw()
+        {
+            if (_cameraFollow != null)
+                return _cameraFollow.Yaw;
+
+            return _mainCamera != null ? _mainCamera.transform.eulerAngles.y : transform.eulerAngles.y;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
