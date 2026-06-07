@@ -1313,8 +1313,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 2
   SprintSpeed: 5.335
-  RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
+  RotationSmoothTime: 0.06
+  SpeedChangeRate: 18
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
   FootstepAudioClips:
   - {fileID: 8300000, guid: 72f526a6a9890f643a88e85a61c86c8a, type: 3}
@@ -1343,6 +1343,7 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   LockCameraPosition: 0
+  UseExternalCamera: 1
 --- !u!114 &4990764682642888921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,7 +1379,7 @@ MonoBehaviour:
   sprint: 0
   analogMovement: 0
   cursorLocked: 1
-  cursorInputForLook: 1
+  cursorInputForLook: 0
 --- !u!114 &2383631508651570851
 MonoBehaviour:
   m_ObjectHideFlags: 0

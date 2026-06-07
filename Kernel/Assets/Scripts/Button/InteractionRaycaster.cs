@@ -35,7 +35,7 @@ public class InteractionRaycaster : MonoBehaviour
                 return;
         }
 
-        CageUnlock[] cages = Object.FindObjectsByType<CageUnlock>(FindObjectsSortMode.None);
+        CageUnlock[] cages = Object.FindObjectsByType<CageUnlock>();
         for (int i = 0; i < cages.Length; i++)
         {
             if (cages[i] != null && cages[i].TryInteract())

@@ -28,19 +28,19 @@ namespace Bit.Robot
 
         public static Vector2 GetMouseLook(float sensitivity)
         {
-            float mx = Input.GetAxis("Mouse X") * sensitivity;
-            float my = Input.GetAxis("Mouse Y") * sensitivity;
-
 #if ENABLE_INPUT_SYSTEM
-            if ((Mathf.Abs(mx) < 1e-5f && Mathf.Abs(my) < 1e-5f) && Mouse.current != null)
+            if (Mouse.current != null)
             {
-                Vector2 d = Mouse.current.delta.ReadValue();
-                mx = d.x * MousePixelScale * sensitivity;
-                my = d.y * MousePixelScale * sensitivity;
+                Vector2 delta = Mouse.current.delta.ReadValue();
+                return new Vector2(
+                    delta.x * MousePixelScale * sensitivity,
+                    delta.y * MousePixelScale * sensitivity);
             }
 #endif
 
-            return new Vector2(mx, my);
+            return new Vector2(
+                Input.GetAxis("Mouse X") * sensitivity,
+                Input.GetAxis("Mouse Y") * sensitivity);
         }
 
         public static bool GetJumpDown()
