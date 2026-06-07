@@ -4671,15 +4671,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1114260476483171701, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26.742
+      value: 15.613
       objectReference: {fileID: 0}
     - target: {fileID: 1114260476483171701, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.03
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 1114260476483171701, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.001
+      value: 14.147
       objectReference: {fileID: 0}
     - target: {fileID: 1114260476483171701, guid: 7ae956b4f54394e80818898d8f4d30c6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14432,6 +14432,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c65abc3e0fa2e6409b7fc1aec2bc22d, type: 3}
+--- !u!1 &902585234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 902585236}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &902585236
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902585234}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.968, y: 0, z: 12.056}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &902971219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27031,7 +27062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebe17ee4d26ac345af0cf1ed3abdc6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HingeDoor
-  hinge: {fileID: 0}
+  hinge: {fileID: 902585236}
   worldAxis: {x: 0, y: 1, z: 0}
   angleDegrees: 86
   duration: 0.5
@@ -30163,7 +30194,7 @@ MonoBehaviour:
   simpleDeath: 1
   simpleDeathDestroyDelay: 2.5
   audioSource: {fileID: 0}
-  deathClip: {fileID: 0}
+  deathClip: {fileID: 8300000, guid: ccc5187f6c16ecb4c92b1ed7ed69f504, type: 3}
   fallImpactClip: {fileID: 0}
   deathVolume: 1
   fallImpactVolume: 1
@@ -36703,7 +36734,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 300049358621593224, guid: 3cd7e264361a542419010d44eed12528, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 392243109549074812, guid: 3cd7e264361a542419010d44eed12528, type: 3}
       propertyPath: m_LocalPosition.x
@@ -37545,3 +37576,4 @@ SceneRoots:
   - {fileID: 1423489928}
   - {fileID: 365936991}
   - {fileID: 1651616874}
+  - {fileID: 902585236}
