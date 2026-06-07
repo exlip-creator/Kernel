@@ -922,7 +922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5219683369421644255, guid: e4419af69a8041e4ebd8ec8599237fe4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.58
+      value: 0.92
       objectReference: {fileID: 0}
     - target: {fileID: 5219683369421644255, guid: e4419af69a8041e4ebd8ec8599237fe4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14441,8 +14441,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 902585236}
+  - component: {fileID: 902585237}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14463,6 +14464,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902585237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902585234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ebe17ee4d26ac345af0cf1ed3abdc6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HingeDoor
+  hinge: {fileID: 1647557081}
+  worldAxis: {x: 0, y: 1, z: 0}
+  angleDegrees: 90
+  duration: 0.5
 --- !u!1001 &902971219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27066,6 +27083,11 @@ MonoBehaviour:
   worldAxis: {x: 0, y: 1, z: 0}
   angleDegrees: 86
   duration: 0.5
+--- !u!4 &1647557081 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: e6742bcf1c6e53248b7eca542e7c70e6, type: 3}
+  m_PrefabInstance: {fileID: 1450335357}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1651616874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37158,6 +37180,7 @@ SceneRoots:
   - {fileID: 1843474096}
   - {fileID: 945403994}
   - {fileID: 1831033637}
+  - {fileID: 902585236}
   - {fileID: 1450335357}
   - {fileID: 1646679029}
   - {fileID: 1230892301}
@@ -37576,4 +37599,3 @@ SceneRoots:
   - {fileID: 1423489928}
   - {fileID: 365936991}
   - {fileID: 1651616874}
-  - {fileID: 902585236}
