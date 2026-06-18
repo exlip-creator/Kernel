@@ -71,6 +71,12 @@ namespace StarterAssets
 			SetCursorState(cursorLocked);
 		}
 
+		public void SetCursorEnabled(bool isEnabled)
+		{
+			Cursor.lockState = isEnabled ? CursorLockMode.None : CursorLockMode.Locked;
+			Cursor.visible = isEnabled;
+		}
+
 		private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;

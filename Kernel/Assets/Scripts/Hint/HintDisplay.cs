@@ -17,7 +17,6 @@ public sealed class HintDisplay : MonoBehaviour
         }
 
         instance = this;
-        TmpFontUtility.EnsureCyrillicFont(hintText);
         Hide();
     }
 
@@ -29,11 +28,10 @@ public sealed class HintDisplay : MonoBehaviour
             return;
         }
 
-        TmpFontUtility.SetText(hintText, message);
+        hintText.text = message;
         panel.SetActive(true);
     }
 
     public void Hide() => panel.SetActive(false);
-
     
 }
