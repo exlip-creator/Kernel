@@ -5,6 +5,7 @@ using System;
 [CreateAssetMenu(menuName = "Inventory/Item", fileName = "NewItem")]
 public class ItemData : ScriptableObject
 {
+    public ScriptableObject script;
     public int id;
     public string itemName;
     public Sprite icon;

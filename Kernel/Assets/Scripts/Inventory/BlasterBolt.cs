@@ -1,10 +1,6 @@
 using Kernel.Combat;
 using UnityEngine;
 
-/// <summary>
-/// Летит по направлению, попадание через короткий Raycast. Не толкает робота: Rigidbody kinematic, коллайдеры в trigger.
-/// Пропускает попадания в <see cref="_ignoreHitsRoot"/> (тело стрелка).
-/// </summary>
 public class BlasterBolt : MonoBehaviour
 {
     [SerializeField] private float speed = 75f;

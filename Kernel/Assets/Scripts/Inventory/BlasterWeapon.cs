@@ -4,10 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 #endif
 
-/// <summary>
-/// Стрельба ЛКМ, только когда в инвентаре выбран указанный ItemData (бластер).
-/// Пропускает попадания в тело стрелка (TPS: луч из камеры не бьёт в голову своему же Health).
-/// </summary>
 public class BlasterWeapon : MonoBehaviour
 {
     [Header("Инвентарь")]

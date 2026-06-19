@@ -1,8 +1,5 @@
 using UnityEngine;
 
-/// <summary>
-/// Показывает modelRoot в руке, когда в инвентаре выбран нужный ItemData.
-/// </summary>
 public class HandItemView : MonoBehaviour
 {
     [Header("Links")]

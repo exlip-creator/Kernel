@@ -160,9 +160,6 @@ public class PickupItem : MonoBehaviour
         UpdatePickupRange();
     }
 
-    /// <summary>
-    /// Нужно, если предмет включили, пока игрок уже стоит в зоне (например, дроп с босса).
-    /// </summary>
     private void RefreshNearbyPlayer()
     {
         if (!TryResolveInventory(null, out var inv)) return;
