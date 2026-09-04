@@ -111,7 +111,7 @@
 ### 3.1. Акторы
 
 <div align="center">
-  <img src="docs/images/use-case-diagram.png" alt="Use Case диаграмма игры Kernel" width="700">
+  <img src="images/use-case-diagram.png" alt="Use Case диаграмма игры Kernel" width="700">
   <p><i>Диаграмма вариантов использования</i></p>
 </div>
 
@@ -216,7 +216,7 @@
 | `Dead` | Прочность исчерпана | → возрождение в начале игры |
 
 <div align="center">
-  <img src="docs/images/player-state-diagram.png" alt="Диаграмма состояний персонажа игрока" width="700">
+  <img src="images/player-state-diagram.png" alt="Диаграмма состояний персонажа игрока" width="700">
   <p><i>Конечный автомат персонажа игрока</i></p>
 </div>
 
@@ -231,7 +231,7 @@
 | `Dead` | Уничтожен | Прочность = 0 |
 
 <div align="center">
-  <img src="docs/images/enemy-state-diagram.png" alt="Диаграмма состояний противника" width="700">
+  <img src="images/enemy-state-diagram.png" alt="Диаграмма состояний противника" width="700">
   <p><i>Конечный автомат противника</i></p>
 </div>
 
